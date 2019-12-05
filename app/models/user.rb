@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :attendances, dependent: :destroy
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
@@ -35,7 +36,7 @@ class User < ApplicationRecord
   end
   
   def remember
-    salf.remember_token = User.new_token
+    self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
   end  
   
